@@ -1,0 +1,33 @@
+package com.ejemplo.ingesoft_calculator_microservice_java.controllers;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ejemplo.ingesoft_calculator_microservice_java.services.OperationService;
+
+@RestController
+@RequestMapping("/operation")
+public class OperationController {
+    @Autowired
+    private OperationService operationService;
+
+    @GetMapping("/substract/{a}/{b}")
+    ResponseEntity<?> getSubstractNumbers(
+        @PathVariable("a") double a,
+        @PathVariable("b") double b
+    ) {
+        try {
+            return ResponseEntity.ok(Map.of(
+                "result", operationService.substractNumbers(a, b)
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
+}
