@@ -31,6 +31,24 @@ public class OperationController {
         }
     }
 
+    @GetMapping("/divide/{a}/{b}")
+    ResponseEntity<?> getDivideNumbers(
+        @PathVariable("a") double a,
+        @PathVariable("b") double b
+    ) {
+        try {
+            if ((int) b != 0) {
+                return ResponseEntity.ok(Map.of(
+                    "result", operationService.divideNumbers(a, b)
+                ));
+            } else {
+                return ResponseEntity.status(400).body("El divisor no puede ser 0");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/history")
     ResponseEntity<?> getOperationHistory() {
         try {

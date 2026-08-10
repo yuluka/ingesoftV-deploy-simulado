@@ -32,6 +32,20 @@ public class OperationService {
         return result;
     }
 
+    public double divideNumbers(double a, double b) {
+        double result = a / b;
+        
+        Operation operation = new Operation();
+        operation.setOperandA(a);
+        operation.setOperandB(b);
+        operation.setOperator("/");
+        operation.setResult(result);
+
+        operationRepository.save(operation);
+
+        return result;
+    }
+
     public List<OperationDto> getOperationHistory() {
         List<Operation> operations = operationRepository.findTop5ByOrderByIdDesc();
         
