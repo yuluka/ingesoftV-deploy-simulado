@@ -1,12 +1,37 @@
 from sqlalchemy.orm import Session
 
+from src.models.operation import Operation
+
 
 def sum_numbers(a: int, b: int, db: Session):
-    result = a + b
+    total = float(a + b)
 
-    return result
+    operation = Operation(
+        operand_a=a,
+        operand_b=b,
+        operator="+",
+        result=total
+    )
+
+    db.add(operation)
+    db.commit()
+    db.refresh(operation)
+
+    return total
+
 
 def multiply_numbers(a: int, b: int, db: Session):
-    result = a * b
+    total = float(a * b)
 
-    return result
+    operation = Operation(
+        operand_a=a,
+        operand_b=b,
+        operator="*",
+        result=total
+    )
+
+    db.add(operation)
+    db.commit()
+    db.refresh(operation)
+
+    return total
